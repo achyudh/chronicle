@@ -1,7 +1,7 @@
 from sklearn.metrics import f1_score, precision_score, recall_score, accuracy_score
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
 from sklearn.multiclass import OneVsRestClassifier
+from sklearn.svm import LinearSVC
 from nltk.corpus import stopwords
 import numpy as np
 
@@ -15,7 +15,7 @@ def train(train_x, train_y):
     vectorizer = TfidfVectorizer(stop_words=english_stopwords,
                                  tokenizer=lib.util.preprocessing.tokenize)
     train_x = vectorizer.fit_transform(train_x)
-    classifier = OneVsRestClassifier(LogisticRegression(random_state=37))
+    classifier = OneVsRestClassifier(LinearSVC(random_state=37))
     classifier.fit(train_x, train_y)
     return classifier, vectorizer
 
