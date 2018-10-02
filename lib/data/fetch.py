@@ -3,6 +3,7 @@ import json
 
 from sklearn.model_selection import train_test_split
 
+
 def reuters():
     train_split = list()
     validation_split = list()
@@ -27,24 +28,26 @@ def reuters():
 
 def imdb():
     dataset = list()
-    with open(os.path.join('data', 'imdb', 'data.json')) as json_file:
-        documents = json.load(json_file)
-        for document in documents:
-            if isinstance(document["review"], dict):
-                try:
-                    text = document["review"]["title"] + " " + document["review"]["review"]
-                    dataset.append((document["review"]["rating"], text))
-                except:
-                    print("Irregular formatting:", document)
+    for filename in ['part1.json', 'part2.json', 'part3.json']:
+        with open(os.path.join('data', 'imdb', filename)) as json_file:
+            documents = json.load(json_file)
+            for document in documents:
+                if isinstance(document["review"], dict):
+                    try:
+                        text = document["review"]["title"] + " " + document["review"]["review"]
+                        dataset.append((document["review"]["rating"], text))
+                    except:
+                        print("Irregular formatting:", document)
+                        text = document["title"] + " " + document["review"]
+                        dataset.append((document["rating"], text))
+                else:
                     text = document["title"] + " " + document["review"]
                     dataset.append((document["rating"], text))
-            else:
-                text = document["title"] + " " + document["review"]
-                dataset.append((document["rating"], text))
     print(len(dataset))
     train_split, test_split = train_test_split(dataset, test_size=0.3, random_state=37)
     train_split, validation_split = train_test_split(dataset, test_size=0.25, random_state=59)
     return train_split, validation_split, test_split
+
 
 if __name__ == "__main__":
     imdb()
