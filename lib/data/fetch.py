@@ -26,6 +26,28 @@ def reuters():
     return train_split, validation_split, test_split
 
 
+def aapd():
+    train_split = list()
+    validation_split = list()
+    test_split = list()
+    with open(os.path.join('data', 'aapd', 'aapd_train.tsv')) as tsv_file:
+        for line in tsv_file:
+            label, text = line.split('\t')
+            label = [int(x) for x in label]
+            train_split.append((label, text))
+    with open(os.path.join('data', 'aapd', 'aapd_validation.tsv')) as tsv_file:
+        for line in tsv_file:
+            label, text = line.split('\t')
+            label = [int(x) for x in label]
+            validation_split.append((label, text))
+    with open(os.path.join('data', 'aapd', 'aapd_test.tsv')) as tsv_file:
+        for line in tsv_file:
+            label, text = line.split('\t')
+            label = [int(x) for x in label]
+            test_split.append((label, text))
+    return train_split, validation_split, test_split
+
+
 def imdb():
     dataset = list()
     for filename in ['part1.json', 'part2.json', 'part3.json']:
