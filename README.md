@@ -1,5 +1,5 @@
 # Reuters Baseline Classification
-This project is aimed at establishing the baselines scores for document classification datasets such as Reuters (RCV1), AAPD, IMDB and Yelp 2014 using basic feature selection techniques and classifiers from Scikit-Learn.
+This project is aimed at establishing the baselines scores for document classification datasets such as Reuters (RCV1), AAPD, IMDB and Yelp 2014 using basic feature selection techniques and classifiers from Scikit-Learn. The datasets are stored separately in this repository: https://git.uwaterloo.ca/arkeshav1/Castor-Data.
 
 ## References:
 * Lewis, David D., et al. "Rcv1: A new benchmark collection for text categorization research." Journal of machine learning research 5.Apr (2004): 361-397.
