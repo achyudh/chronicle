@@ -11,11 +11,14 @@ import lib.util.preprocessing
 english_stopwords = stopwords.words("english")
 
 
-def train(train_x, train_y):
+def train(train_x, train_y, single_label=True, random_state=37):
     vectorizer = TfidfVectorizer(stop_words=english_stopwords,
                                  tokenizer=lib.util.preprocessing.tokenize)
     train_x = vectorizer.fit_transform(train_x)
-    classifier = OneVsRestClassifier(LinearSVC(random_state=37))
+    if single_label:
+        classifier = LinearSVC(random_state=random_state)
+    else:
+        classifier = OneVsRestClassifier(LinearSVC(random_state=random_state))
     classifier.fit(train_x, train_y)
     return classifier, vectorizer
 
