@@ -35,7 +35,7 @@ def evaluate(classifier, vectorizer, evaluate_x, evaluate_y):
     precision = precision_score(evaluate_y, predict_y, average='micro')
     recall = recall_score(evaluate_y, predict_y, average='micro')
     f1 = f1_score(evaluate_y, predict_y, average='micro')
-    print(accuracy, precision, recall, f1)
+    return accuracy, precision, recall, f1
 
 
 if __name__ == '__main__':

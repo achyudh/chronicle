@@ -52,17 +52,17 @@ def yelp14():
     train_split = list()
     validation_split = list()
     test_split = list()
-    with open(os.path.join('data', 'aapd', 'aapd_train.tsv')) as tsv_file:
+    with open(os.path.join('data', 'yelp14', 'yelp2014_train.tsv')) as tsv_file:
         for line in tsv_file:
             label, text = line.split('\t')
             label = [int(x) for x in label]
             train_split.append((label, text))
-    with open(os.path.join('data', 'aapd', 'aapd_validation.tsv')) as tsv_file:
+    with open(os.path.join('data', 'yelp14', 'yelp2014_validation.tsv')) as tsv_file:
         for line in tsv_file:
             label, text = line.split('\t')
             label = [int(x) for x in label]
             validation_split.append((label, text))
-    with open(os.path.join('data', 'aapd', 'aapd_test.tsv')) as tsv_file:
+    with open(os.path.join('data', 'yelp14', 'yelp2014_test.tsv')) as tsv_file:
         for line in tsv_file:
             label, text = line.split('\t')
             label = [int(x) for x in label]

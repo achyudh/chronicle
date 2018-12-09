@@ -12,6 +12,7 @@ english_stopwords = stopwords.words("english")
 
 
 def train(train_x, train_y, single_label=True, random_state=37):
+    np.random.seed(random_state)
     vectorizer = TfidfVectorizer(stop_words=english_stopwords,
                                  tokenizer=lib.util.preprocessing.tokenize)
     train_x = vectorizer.fit_transform(train_x)

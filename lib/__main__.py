@@ -2,6 +2,7 @@ from lib.model import linear_svc, logistic_regression
 from lib.data import fetch
 from lib.args import get_args
 import numpy as np
+import statistics
 
 if __name__ == '__main__':
     args = get_args()
@@ -10,16 +11,16 @@ if __name__ == '__main__':
     recall_values = list()
     f1_values = list()
 
-    if args.dataset.lower == 'reuters':
+    if args.dataset.lower() == 'reuters':
         train_split, validation_split, test_split = fetch.reuters()
         single_label = False
-    elif args.dataset.lower == 'aapd':
+    elif args.dataset.lower() == 'aapd':
         train_split, validation_split, test_split = fetch.aapd()
         single_label = False
-    elif args.dataset.lower == 'imdb':
+    elif args.dataset.lower() == 'imdb':
         train_split, validation_split, test_split = fetch.imdb()
         single_label = True
-    elif args.dataset.lower == 'yelp14':
+    elif args.dataset.lower() == 'yelp2014':
         train_split, validation_split, test_split = fetch.yelp14()
         single_label = True
     else:
@@ -44,19 +45,23 @@ if __name__ == '__main__':
     else:
         raise Exception("Unsupported model")
 
-    for random_state in (1, 3, 34, 345, 3454):
+    for random_state in (345, 3454):
         classifier, vectorizer = model.train(train_x, train_y, single_label=single_label, random_state=random_state)
         print("Dev:", model.evaluate(classifier, vectorizer, validation_x, validation_y))
         accuracy, precision, recall, f1 = model.evaluate(classifier, vectorizer, test_x, test_y)
-        print("Test:", accuracy, precision, recall, f1)
-        accuracy_values.append(accuracy)
-        precision_values.append(precision)
-        recall_values.append(recall)
-        f1_values.append(f1)
+        print("Test:", (accuracy, precision, recall, f1))
+        accuracy_values.append(100 * accuracy)
+        precision_values.append(100 * precision)
+        recall_values.append(100 * recall)
+        f1_values.append(100 * f1)
 
+    output_string = ""
     for metric_name, metric_values in (("Accuracy:", accuracy_values), ("Precision:", precision_values),
                                        ("Recall:", recall_values), ("F-measure:", f1_values)):
-        metric_median = np.median(np.array(metric_values))
-        metric_range = (min(metric_values) - metric_median, max(metric_values) - metric_median)
-        print("\n" + metric_name)
-        print(metric_median, metric_range)
+        metric_mean = statistics.mean(metric_values)
+        metric_stdev = statistics.stdev(metric_values)
+        # metric_median = np.median(np.array(metric_values))
+        # metric_range = (min(metric_values) - metric_median, max(metric_values) - metric_median)
+        output_string += "{:.2f}".format(metric_mean) + " ± " + "{:.2f}".format(metric_stdev) + "\t"
+    print("\t\t".join(("Accuracy", "Precision", "Recall", "F1")))
+    print(output_string)
