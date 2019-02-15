@@ -1,4 +1,5 @@
 from nltk import tokenize
+from collections import defaultdict
 
 
 def num_samples(data_x):
@@ -15,5 +16,12 @@ def avg_num_sentences(data_x):
     return sum(sent_counts)/len(sent_counts)
 
 
-def label_skew(data_y):
-    return sum(data_y)/len(data_y)
+def label_freq(data_y):
+    counts = defaultdict(int)
+    total = 0
+    for label in data_y:
+        for digit in range(len(label)):
+            if label[digit] == '1':
+                counts[digit] += 1
+        total += 1
+    return [count/total for count in counts.values()]
