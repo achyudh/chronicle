@@ -23,15 +23,18 @@ if __name__ == '__main__':
     elif args.dataset.lower() == 'yelp2014':
         train_split, validation_split, test_split = fetch.yelp14()
         single_label = True
+    elif args.dataset.lower() == 'agnews':
+        train_split, validation_split, test_split = fetch.agnews()
+        single_label = True
     else:
         raise Exception("Unsupported dataset")
 
     train_x = [x[1] for x in train_split]
-    train_y = np.array([x[0] for x in train_split])
+    train_y = np.array([[int(x0) for x0 in x[0]] for x in train_split])
     test_x = [x[1] for x in test_split]
-    test_y = np.array([x[0] for x in test_split])
+    test_y = np.array([[int(x0) for x0 in x[0]] for x in test_split])
     validation_x = [x[1] for x in validation_split]
-    validation_y = np.array([x[0] for x in validation_split])
+    validation_y = np.array([[int(x0) for x0 in x[0]] for x in validation_split])
 
     if single_label:
         train_y = [np.where(r == 1)[0][0] for r in train_y]
