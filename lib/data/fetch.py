@@ -80,6 +80,25 @@ def imdb():
     return train_split, validation_split, test_split
 
 
+def agnews():
+    train_split = list()
+    validation_split = list()
+    test_split = list()
+    with open(os.path.join('data', 'agnews', 'ag_train.tsv')) as tsv_file:
+        for line in tsv_file:
+            label, text = line.split('\t')
+            train_split.append((label, text))
+    with open(os.path.join('data', 'agnews', 'ag_test.tsv')) as tsv_file:
+        for line in tsv_file:
+            label, text = line.split('\t')
+            validation_split.append((label, text))
+    with open(os.path.join('data', 'agnews', 'ag_test.tsv')) as tsv_file:
+        for line in tsv_file:
+            label, text = line.split('\t')
+            test_split.append((label, text))
+    return train_split, validation_split, test_split
+
+
 def robust04():
     train_split, validation_split = dict(), dict()
     topics = ['307', '310', '321', '325', '330', '336', '341', '344', '345', '347', '350', '353', '354', '355', '356',
